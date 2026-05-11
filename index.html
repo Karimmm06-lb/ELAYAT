@@ -1110,8 +1110,8 @@ const SVCS = {
   ]
 };
 const CAT_NAMES = {headspa:'HeadSpa',massages:'Massages',brow:'Brow Lift',cours:'Cours Maquillage'};
+const API = 'http://localhost:4000/api';
 const ALL_SLOTS = ['09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00','18:00'];
-const TAKEN_SLOTS = ['10:00','14:00'];
 const S = {cat:null,svc:null,svcName:'',price:'',dur:'',date:null,time:null};
 
 function selCat(cat, el) {
@@ -1169,16 +1169,25 @@ function renderCal(){
 }
 function prevM(){cM--;if(cM<0){cM=11;cY--;}renderCal();}
 function nextM(){cM++;if(cM>11){cM=0;cY++;}renderCal();}
-function renderSlots(){
+async function renderSlots(){
   const g=document.getElementById('slots-grid');
   const t=document.getElementById('slots-title');
   if(!S.date)return;
   const ds=S.date.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
   t.textContent=ds.charAt(0).toUpperCase()+ds.slice(1); t.style.color='var(--ink)';
+  g.innerHTML='<div style="font-size:0.7rem;color:var(--ink3);padding:12px">Chargement...</div>';
+
+  let slots = ALL_SLOTS.map(s => ({ time: s, available: true }));
+  try {
+    const dateStr = S.date.toISOString().split('T')[0];
+    const res = await fetch(`${API}/bookings/slots/${dateStr}`);
+    if(res.ok) slots = await res.json();
+  } catch(e) { /* serveur off — on affiche tous les créneaux */ }
+
   g.innerHTML='';
-  ALL_SLOTS.forEach(sl=>{
+  slots.forEach(({time:sl, available})=>{
     const el=document.createElement('div');el.textContent=sl;
-    if(TAKEN_SLOTS.includes(sl)){el.className='slot taken';}
+    if(!available){el.className='slot taken';}
     else{
       el.className='slot avail';
       if(S.time===sl)el.classList.add('sel');
@@ -1223,14 +1232,59 @@ function goStep(n){
   });
   document.getElementById('booking').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function submitForm(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  if(!name||!phone){toast('Champs requis','Veuillez renseigner votre nom et téléphone.');return;}
-  document.querySelectorAll('.bp').forEach(p=>p.classList.remove('active'));
-  document.getElementById('bp-ok').classList.add('active');
-  document.querySelectorAll('.step').forEach(s=>s.classList.add('done'));
-  toast('Réservation envoyée','Vous serez contactée dans les 24h.',6000);
+async function submitForm(){
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const note  = document.getElementById('f-note').value.trim();
+
+  if(!name||!phone){ toast('Champs requis','Veuillez renseigner votre nom et téléphone.'); return; }
+
+  // Photo en base64 si Brow Lift
+  let photoUrl = null;
+  const photoInput = document.getElementById('f-photo');
+  if(S.cat==='brow' && photoInput?.files[0]) {
+    photoUrl = await new Promise(resolve => {
+      const r = new FileReader();
+      r.onload = e => resolve(e.target.result);
+      r.readAsDataURL(photoInput.files[0]);
+    });
+  }
+
+  const submitBtn = document.querySelector('#bp4 .btn-dark:last-child');
+  submitBtn.textContent = 'Envoi en cours...';
+  submitBtn.disabled = true;
+
+  try {
+    const res = await fetch(`${API}/bookings`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name, phone,
+        email:    email    || null,
+        note:     note     || null,
+        category: S.cat,
+        service:  S.svcName,
+        price:    S.price,
+        duration: S.dur,
+        date:     S.date.toISOString(),
+        time:     S.time,
+        photoUrl,
+      }),
+    });
+
+    if(!res.ok) throw new Error('Erreur serveur');
+
+    document.querySelectorAll('.bp').forEach(p=>p.classList.remove('active'));
+    document.getElementById('bp-ok').classList.add('active');
+    document.querySelectorAll('.step').forEach(s=>s.classList.add('done'));
+    toast('Réservation envoyée ✦','Vous serez contactée dans les 24h.',6000);
+
+  } catch(err) {
+    toast('Erreur','Problème de connexion. Réessayez ou contactez-nous sur Instagram.');
+    submitBtn.textContent = 'Confirmer la réservation';
+    submitBtn.disabled = false;
+  }
 }
 function resetBook(){
   Object.assign(S,{cat:null,svc:null,svcName:'',price:'',dur:'',date:null,time:null});
