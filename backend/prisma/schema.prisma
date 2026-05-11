@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // Infos client
+  name      String
+  phone     String
+  email     String?
+  note      String?
+
+  // Soin
+  category  String   // headspa | massages | brow | cours
+  service   String   // nom du service
+  price     String
+  duration  String
+
+  // RDV
+  date      DateTime
+  time      String
+
+  // Photo sourcils (Brow Lift uniquement)
+  photoUrl  String?
+
+  // Statut
+  status    String   @default("pending") // pending | confirmed | cancelled
+
+  @@map("bookings")
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  name      String
+  email     String?
+  phone     String?
+  message   String
+
+  @@map("contacts")
+}
