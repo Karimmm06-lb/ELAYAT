@@ -1,0 +1,2 @@
+# Override GitHub Linguist — hide HTML
+*.html linguist-detectable=false
