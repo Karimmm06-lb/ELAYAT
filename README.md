@@ -127,3 +127,21 @@ Ouvrir `index.html` et chercher (Ctrl+F) le nom du service à modifier.
 ## Contact
 - Instagram : [@elaya_at](https://instagram.com/elaya_at)
 - Adresse : Dely Ibrahim, Alger
+
+---
+
+## Menu digital + QR code + admin
+
+- **Menu public** : `/menu.html` (mobile-first, lu depuis `GET /api/menu`)
+- **Admin** : `/admin.html` — connexion par mot de passe, édition des catégories / articles (nom, prix, durée, description, disponibilité), QR code à télécharger ou imprimer
+- Le menu est stocké dans `backend/data/menu.json` (créé à la première sauvegarde, valeurs d'origine dans `menu.default.json`)
+
+```bash
+cd backend
+npm install
+# dans .env : ADMIN_PASSWORD="votre-mot-de-passe"
+npm start          # http://localhost:4000/menu.html  et  /admin.html
+```
+
+Le serveur Express sert aussi le front : en production, ouvrez `/admin.html`, mettez l'URL publique de `/menu.html` dans le champ « Adresse du menu » et téléchargez le QR code.
+> Le menu nécessite le backend (il ne fonctionne pas sur GitHub Pages seul). Sur un hébergeur à disque éphémère, utilisez un volume persistant pour `backend/data/`.

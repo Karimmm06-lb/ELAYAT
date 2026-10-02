@@ -1,0 +1,132 @@
+{
+  "title": "ELAYAT",
+  "subtitle": "Carte des prestations",
+  "currency": "DA",
+  "categories": [
+    {
+      "name": "HeadSpa",
+      "items": [
+        {
+          "name": "Mey Experience",
+          "description": "Bain vapeur, gommage capillaire, rituel de massages crâniens accompagnés de nos soins nourrissants.",
+          "duration": "45 min + Séchage",
+          "price": 6500,
+          "available": true
+        },
+        {
+          "name": "Évasion",
+          "description": "Bain vapeur, gommage capillaire, massages crâniens et décolleté — épaules et haut du dos.",
+          "duration": "60 min + Séchage",
+          "price": 7500,
+          "available": true
+        },
+        {
+          "name": "Skin & Care",
+          "description": "Rituel HeadSpa complet associé au soin du visage Korean Glass Skin.",
+          "duration": "80 min + Séchage",
+          "price": 9500,
+          "available": true
+        },
+        {
+          "name": "Rêve Ultime",
+          "description": "Massages crâniens, épaules, dos, décolleté, mains et pieds. Notre rituel le plus complet.",
+          "duration": "80 min + Séchage",
+          "price": 11000,
+          "available": true
+        }
+      ]
+    },
+    {
+      "name": "Massages",
+      "items": [
+        {
+          "name": "Visage & Décolleté",
+          "description": "Drainage lymphatique du visage et massage apaisant du décolleté.",
+          "duration": "45 min",
+          "price": 5000,
+          "available": true
+        },
+        {
+          "name": "Hair Meditation",
+          "description": "Massages crâniens apaisants, brossage délicat et méditation guidée.",
+          "duration": "45 min",
+          "price": 5000,
+          "available": true
+        },
+        {
+          "name": "Pieds & Mains",
+          "description": "Massages relaxants des pieds et des mains.",
+          "duration": "30 min",
+          "price": 3500,
+          "available": true
+        }
+      ]
+    },
+    {
+      "name": "Brow Lift",
+      "items": [
+        {
+          "name": "Restructuration des sourcils",
+          "description": "Mise en forme sur-mesure sans épilation.",
+          "duration": "",
+          "price": 2500,
+          "available": true
+        },
+        {
+          "name": "Henna Tattoo",
+          "description": "Coloration naturelle au henné, résultat longue durée.",
+          "duration": "",
+          "price": 2500,
+          "available": true
+        },
+        {
+          "name": "Brow Lift",
+          "description": "Lifting des sourcils par lamination.",
+          "duration": "",
+          "price": 3000,
+          "available": true
+        },
+        {
+          "name": "Brow Lift + Henna Brow",
+          "description": "Lamination associée à la coloration au henné.",
+          "duration": "",
+          "price": 5000,
+          "available": true
+        },
+        {
+          "name": "Brow Lift + Restructuration",
+          "description": "Lamination et mise en forme complète sans épilation.",
+          "duration": "",
+          "price": 5000,
+          "available": true
+        },
+        {
+          "name": "Brow Lift + Henna + Restructuration",
+          "description": "Formule Signature : lifting, henné et restructuration.",
+          "duration": "",
+          "price": 6000,
+          "available": true
+        }
+      ]
+    },
+    {
+      "name": "Cours Maquillage",
+      "items": [
+        {
+          "name": "Cours d'Auto Maquillage — Essentielle",
+          "description": "Cours privé : teint, yeux, lèvres, sourcils. Matériel et collation offerts.",
+          "duration": "2 h",
+          "price": 7000,
+          "available": true
+        },
+        {
+          "name": "Cours d'Auto Maquillage — Excellence",
+          "description": "Coaching sur-mesure, deux looks (Jour & Soirée). Matériel et collation offerts.",
+          "duration": "3 h",
+          "price": 10000,
+          "available": true
+        }
+      ]
+    }
+  ]
+}
