@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>ELAYAT — Admin Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+<div class="login card" id="login">
+  <h1>ELAYAT</h1>
+  <p>Administration du menu</p>
+  <form id="login-form">
+    <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password" required />
+    <button type="submit" style="width:100%">Connexion</button>
+  </form>
+  <p class="status err" id="login-err"></p>
+</div>
+
+<div class="wrap hidden" id="app">
+  <div class="bar">
+    <h1>Menu</h1>
+    <div style="display:flex;gap:8px">
+      <a class="btn ghost" href="menu.html" target="_blank">Voir le menu</a>
+      <button class="ghost" id="logout">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-bottom:12px">QR code</h2>
+    <div class="qr">
+      <img id="qr-img" alt="QR code du menu" />
+      <div class="info">
+        <div><label for="qr-url">Adresse du menu</label><input id="qr-url" /></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn" id="qr-dl" download="elayat-menu-qr.svg">Télécharger le QR</a>
+          <button class="ghost" id="qr-print">Imprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-bottom:12px">Informations</h2>
+    <div class="grid">
+      <div><label for="m-title">Titre</label><input id="m-title" /></div>
+      <div><label for="m-sub">Sous-titre</label><input id="m-sub" /></div>
+      <div><label for="m-cur">Devise</label><input id="m-cur" /></div>
+    </div>
+  </div>
+
+  <div id="cats"></div>
+  <button class="ghost" id="add-cat">+ Ajouter une catégorie</button>
+  <p style="margin-top:24px"><button class="danger sm" id="reset">Restaurer le menu d'origine</button></p>
+</div>
+
+<div class="save hidden" id="savebar">
+  <span class="status" id="status"></span>
+  <button id="save">Enregistrer</button>
+</div>
+<script src="js/admin.js"></script>
+</body>
+</html>
